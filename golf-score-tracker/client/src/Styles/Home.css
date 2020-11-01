@@ -1,0 +1,98 @@
+.topnav {
+    background-color: #838383;
+    overflow: hidden;
+}
+  
+.topnav a {
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+  
+.topnav a:hover {
+    background-color: #39ace7;
+}
+
+.Center-card-info {
+    margin: 0 auto;
+    /* margin-top:10%;  */
+}
+
+.Center-card-scores {
+    margin: 0 auto;
+    margin-top:2%; 
+    background-color:rgb(0, 0, 0);
+    width: 800px;
+    padding:5px 10px 5px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+  
+.Card-box {
+    margin: 0 auto;
+    margin-top: 2%;
+    background-color:rgba(199, 199, 199, 0.5);
+    width: 800px;
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Hole-num {
+    background-color:#363636;
+}
+
+.Submit-course-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: #51df56;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 6px rgb(99, 99, 99);
+}
+
+.Submit-course-button:hover {
+    background-color: #3e8e41
+}
+
+.Submit-course-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.Choose-course-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: #51df56;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 6px #999;
+}
+
+.Choose-course-button:hover {
+    background-color: #3e8e41
+}
+
+.Choose-course-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+.Select-course-dropdown {
+    margin-top: 10%
+}

@@ -1,0 +1,75 @@
+.Choose-player-button {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: #51df56;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 6px #999;
+}
+
+.Choose-player-button:hover {
+    background-color: #3e8e41
+}
+
+.Choose-player-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+.Value-display {
+    padding-left: 2%;
+    display: inline
+}
+
+.Top-stat-box {
+    margin: 0 auto;
+    margin-top: 5%;
+    background-color:rgba(255, 255, 255, 0.863);
+    width: max-content;
+    display:inline-block;
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Pie-chart {
+    position: absolute;
+    height: 400px;
+    width: 500px;
+    top: 50%;
+    left: 25%;
+    transform: translate(-75%, -50%);
+    background-color:rgba(255, 255, 255, 0.863);
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Bar-chart {
+    position: absolute;
+    height: 400px;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:rgba(255, 255, 255, 0.863);
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Line-chart {
+    position: absolute;
+    height: 400px;
+    width: 500px;
+    top: 50%;
+    left: 75%;
+    transform: translate(-25%, -50%);
+    background-color:rgba(255, 255, 255, 0.863);
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
