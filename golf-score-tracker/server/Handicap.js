@@ -57,7 +57,7 @@ class Handicap {
             return (await this.totalSmallestDifferentials(scoreDifferentials, takenDiff)/takenDiff).toFixed(1);
 
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
@@ -115,7 +115,7 @@ class Handicap {
             }
             return scoreDifferentials;
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 }

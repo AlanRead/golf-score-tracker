@@ -21,7 +21,7 @@ class Scores {
             //rounds to the nearest tenth
             return avgScore.toFixed(1);
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
@@ -47,7 +47,7 @@ class Scores {
             let courseName = courseResponse.rows[0].course_name;
             return [bestScore, courseName];
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
@@ -71,7 +71,7 @@ class Scores {
             }
             return totalScoreMap;
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 }

@@ -109,7 +109,7 @@ app.post("/statistics", async(req, res) => {
         let jsonString = JSON.stringify(convertJson);
         res.send(jsonString);
     } catch (err) {
-        console.error(err);
+        console.error(err.message);
     }
 })
 

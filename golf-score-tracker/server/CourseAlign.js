@@ -16,7 +16,7 @@ class CourseAlign {
             }
             return holeAverage;
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
@@ -59,7 +59,7 @@ class CourseAlign {
             }
             return scoreType;
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
@@ -108,10 +108,17 @@ class CourseAlign {
             }
             return scoreMap;
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
+    greensInRegulationPercent = function(response) {
+        try {
+            
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
     
 
     /**
