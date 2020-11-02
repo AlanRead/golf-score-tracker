@@ -15,6 +15,8 @@ export default class Statistics extends Component {
             bestCourse: '',
             averageHoleScore: {},
             scoreTypes: {}, 
+            totalPutts: {},
+            puttsPerHole: {},
 
             pieData: {
                 labels: [],
@@ -45,7 +47,27 @@ export default class Statistics extends Component {
                         backgroundColor:[]
                     }
                 ]
-            }
+            },
+            lineTotalPutts: {
+                labels: [],
+                datasets: [
+                    {
+                        label: '', 
+                        data: [],
+                        backgroundColor:[]
+                    }
+                ]
+            },
+            pieHolePutts: {
+                labels: [],
+                datasets: [
+                    {
+                        label: '', 
+                        data: [],
+                        backgroundColor:[]
+                    }
+                ]
+            },
         }
         this.handlePlayerSelect = this.handlePlayerSelect.bind(this);
     }
@@ -84,6 +106,8 @@ export default class Statistics extends Component {
             this.createPieChart(data[2]);
             this.createBarChart(data[4]);
             this.createLineChart(data[5]);
+            this.createTotalPuttsChart(data[6]);
+            this.createHolePuttsChart(data[7]);
         } catch (err) {
             console.error(err.messsage);
         }
@@ -105,7 +129,7 @@ export default class Statistics extends Component {
 
     createPieChart = (scoreTypes) => {
         let names = Object.keys(scoreTypes);
-        let numScoreTypes = Object.values(scoreTypes)
+        let numScoreTypes = Object.values(scoreTypes);
 
         this.setState ({
             pieData: {
@@ -124,7 +148,7 @@ export default class Statistics extends Component {
 
     createBarChart = (scoreAverages) => {
         let par = Object.keys(scoreAverages);
-        let average = Object.values(scoreAverages)
+        let average = Object.values(scoreAverages);
 
         this.setState ({
             barData: {
@@ -143,7 +167,7 @@ export default class Statistics extends Component {
 
     createLineChart = (totalScores) => {
         let dates = Object.keys(totalScores);
-        let totals = Object.values(totalScores)
+        let totals = Object.values(totalScores);
 
         this.setState ({
             lineData: {
@@ -156,6 +180,48 @@ export default class Statistics extends Component {
                         //backgroundColor:['#00E4FF'],
                         borderColor:['#00AEFF'],
                                     
+                    }
+                ]
+            }
+        })
+    }
+
+    createTotalPuttsChart = (totalPutts) => {
+        let dates = Object.keys(totalPutts);
+        let totals = Object.values(totalPutts);
+
+        this.setState ({
+            lineTotalPutts: {
+                title: "Total Putts",
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'Total Putts', 
+                        data: totals,
+                        borderColor:['#00AEFF'],     
+                    }
+                ]
+            }
+        })
+    }
+
+    createHolePuttsChart = (puttsPerHole) => {
+        let puttNum = Object.keys(puttsPerHole);
+        let totalPutts = Object.values(puttsPerHole);
+
+        for (let i = 0; i < puttNum.length; i ++) {
+            puttNum[i] += " Putts";
+        }
+
+        this.setState ({
+            pieHolePutts: {
+                title: "Putts per Hole",
+                labels: puttNum,
+                datasets: [
+                    {
+                        label: 'Putts per Hole', 
+                        data: totalPutts,
+                        backgroundColor:['#32b1e4', '#a3cff6', '#a2a7aa', '#f6b840', '#ff9700', '#ee5c00', '#ec1d1d'],
                     }
                 ]
             }
@@ -204,6 +270,32 @@ export default class Statistics extends Component {
                     <Line data={this.state.lineData} 
                         options={
                             { 
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        }
+                    />
+                </div>
+                <div className="Line-putt-chart">
+                    <Line data={this.state.lineTotalPutts} 
+                        options={
+                            {   
+                                animation: {
+                                    animateScale: true,
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        }
+                    />
+                </div>
+                <div className="Pie-putt-chart">
+                    <Pie data={this.state.pieHolePutts} 
+                        options={
+                            {   
+                                animation: {
+                                    animateScale: true,
+                                },
                                 responsive: true,
                                 maintainAspectRatio: false
                             }

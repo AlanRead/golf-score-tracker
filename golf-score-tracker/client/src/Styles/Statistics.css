@@ -30,8 +30,8 @@
 
 .Top-stat-box {
     margin: 0 auto;
-    margin-top: 5%;
-    background-color:rgba(255, 255, 255, 0.863);
+    margin-top: 1%;
+    background-color:rgba(150, 150, 150, 0.863);
     width: max-content;
     display:inline-block;
     padding:10px 10px 10px 10px;
@@ -42,9 +42,9 @@
     position: absolute;
     height: 400px;
     width: 500px;
-    top: 50%;
+    top: 40%;
     left: 25%;
-    transform: translate(-75%, -50%);
+    transform: translate(-75%, -60%);
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
@@ -54,9 +54,9 @@
     position: absolute;
     height: 400px;
     width: 500px;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
@@ -66,9 +66,33 @@
     position: absolute;
     height: 400px;
     width: 500px;
-    top: 50%;
+    top: 40%;
     left: 75%;
-    transform: translate(-25%, -50%);
+    transform: translate(-25%, -60%);
+    background-color:rgba(255, 255, 255, 0.863);
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Pie-putt-chart {
+    position: absolute;
+    height: 400px;
+    width: 500px;
+    top: 70%;
+    left: 25%;
+    transform: translate(-75%, -30%);
+    background-color:rgba(255, 255, 255, 0.863);
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Line-putt-chart {
+    position: absolute;
+    height: 400px;
+    width: 500px;
+    top: 70%;
+    left: 75%;
+    transform: translate(-25%, -30%);
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;

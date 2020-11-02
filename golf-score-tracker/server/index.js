@@ -103,8 +103,10 @@ app.post("/statistics", async(req, res) => {
         const handicap = await stats.calculateHandicap();
         const holeAverage = await stats.calculateParAverages();
         const totalScores = await stats.calculateScoreTotals();
+        const totalPutts = await stats.totalRoundPutts();
+        const puttsPerHole = await stats.puttsPerHole();
 
-        convertJson.push.apply(convertJson, [avgScore, bestScoreInfo, scoreTypes, handicap, holeAverage, totalScores]);
+        convertJson.push.apply(convertJson, [avgScore, bestScoreInfo, scoreTypes, handicap, holeAverage, totalScores, totalPutts, puttsPerHole]);
 
         let jsonString = JSON.stringify(convertJson);
         res.send(jsonString);

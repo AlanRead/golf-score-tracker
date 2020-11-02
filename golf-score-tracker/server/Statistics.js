@@ -1,6 +1,7 @@
 const Scores = require ('./Scores');
 const Handicap = require ('./Handicap');
 const CourseAlign = require ('./CourseAlign');
+const Putts = require ('./Putts');
 
 class Statistics {
     constructor(playerName) {
@@ -8,6 +9,7 @@ class Statistics {
         this.scores = new Scores();
         this.handicap = new Handicap();
         this.courseAlign = new CourseAlign();
+        this.putts = new Putts();
     }
 
     /**
@@ -52,6 +54,14 @@ class Statistics {
      */
     totalHoleScores = async function() {
         return this.courseAlign.totalHoleScores(this.playerName);
+    }
+
+    totalRoundPutts = async function() {
+        return this.putts.totalRoundPutts(this.playerName);
+    }
+
+    puttsPerHole = async function() {
+        return this.putts.puttsPerHole(this.playerName);
     }
 }
 
