@@ -5,9 +5,6 @@ export default class ScoreCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            playerName: '',
-            courseName: '',
-            date: '',
             total: 0,
             puttTotal: 0
         }

@@ -1,3 +1,9 @@
+.wrapper {
+    margin-left:auto;
+    margin-right:auto;
+    width:2000px;
+}
+
 .Choose-player-button {
     display: inline-block;
     padding: 5px 10px;
@@ -31,68 +37,81 @@
 .Top-stat-box {
     margin: 0 auto;
     margin-top: 1%;
-    background-color:rgba(150, 150, 150, 0.863);
-    width: max-content;
-    display:inline-block;
+    background-color:rgba(255, 255, 255, 0.863);
+    /* width: max-content; */
+    /* display:inline-block; */
+    max-width: 1200px;
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
 }
 
 .Pie-chart {
-    position: absolute;
+    position: relative;
     height: 400px;
     width: 500px;
-    top: 40%;
+    margin-top: .5%;
+    margin-left: 4%;
+    /* top: 40%;
     left: 25%;
-    transform: translate(-75%, -60%);
+    transform: translate(-75%, -60%); */
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
 }
 
 .Bar-chart {
-    position: absolute;
+    position: relative;
     height: 400px;
     width: 500px;
-    top: 40%;
+    margin-top: -21%;
+    margin-left: 35%;
+    /* top: 40%;
     left: 50%;
-    transform: translate(-50%, -60%);
+    transform: translate(-50%, -60%); */
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
 }
 
 .Line-chart {
-    position: absolute;
+    position: relative;
     height: 400px;
     width: 500px;
-    top: 40%;
-    left: 75%;
-    transform: translate(-25%, -60%);
+    margin-top: -21%;
+    margin-left: 66%;
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
 }
 
 .Pie-putt-chart {
-    position: absolute;
+    position: relative;
     height: 400px;
     width: 500px;
-    top: 70%;
-    left: 25%;
-    transform: translate(-75%, -30%);
+    margin-top: 1%;
+    margin-left: 4%;
+    background-color:rgba(255, 255, 255, 0.863);
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Pie-greens-chart {
+    position: relative;
+    height: 400px;
+    width: 500px;
+    margin-top: -21%;
+    margin-left: 35%;
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
 }
 
 .Line-putt-chart {
-    position: absolute;
+    position: relative;
     height: 400px;
-    width: 500px;
-    top: 70%;
-    left: 75%;
-    transform: translate(-25%, -30%);
+    width: 500px;    
+    margin-top: -21%;
+    margin-left: 66%;
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;

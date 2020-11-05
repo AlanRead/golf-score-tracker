@@ -49,8 +49,6 @@ class Statistics {
 
     /**
      * Determines if a hole score is an eagle, birdie, par, bogey, etc
-     * 
-     * TODO: This needs to be refactored
      */
     totalHoleScores = async function() {
         return this.courseAlign.totalHoleScores(this.playerName);
@@ -62,6 +60,10 @@ class Statistics {
 
     puttsPerHole = async function() {
         return this.putts.puttsPerHole(this.playerName);
+    }
+
+    greensInRegulationPercent = async function() {
+        return this.courseAlign.greensInRegulationPercent(this.playerName);
     }
 }
 

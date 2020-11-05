@@ -4,6 +4,7 @@ import './Styles/App.css';
 
 import ChooseCourse from "./components/ChooseCourse";
 import Statistics from "./components/Statistics";
+import GameScores from "./components/GameScores"
 
 function App() {
   return (
@@ -12,10 +13,12 @@ function App() {
         <div className="topnav">
             <Link to={"/"}>Home</Link>
             <Link to={"/Statistics"}>Statistics</Link>
+            <Link to={"/GameScores"}>Score Cards</Link>
         </div>
         <Switch>
           <Route path="/" exact component={ChooseCourse} />
-          <Route path="/statistics" component={Statistics} />
+          <Route path="/Statistics" component={Statistics} />
+          <Route path="/GameScores" component={GameScores} />
         </Switch>
         </div>
     </Router>

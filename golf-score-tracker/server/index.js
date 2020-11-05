@@ -6,6 +6,7 @@ const cors = require("cors");
 const pool = require("./db");
 const Statistics = require ('./Statistics');
 const { text } = require("express");
+const CourseAlign = require("./CourseAlign");
 
 app.use(cors());
 app.use(express.json());
@@ -58,15 +59,19 @@ app.post("/score_card", async(req, res) => {
             p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, total, puttTotal } = req.body;
         let textScore = "INSERT INTO score_card (player_name, course_name, game_date, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, \
             h16, h17, h18, total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *";
+
         let textPutts = "INSERT INTO putt_card (player_name, course_name, game_date, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, \
             p16, p17, p18, putt_total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *";
+
         let scoreValues = [playerName, courseName, gameDate, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total];
         let puttValues = [playerName, courseName, gameDate, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, puttTotal];
         if (gameDate == '') {
             textScore = "INSERT INTO score_card (player_name, course_name, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, \
                 h16, h17, h18, total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING *";
+
             textPutts = "INSERT INTO putt_card (player_name, course_name, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, \
                 p16, p17, p18, putt_total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING *";
+
             scoreValues = [playerName, courseName, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total];
             puttValues = [playerName, courseName, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, puttTotal];
         }
@@ -79,6 +84,11 @@ app.post("/score_card", async(req, res) => {
 
 //Gets all of the players to be loaded in the player dropdown of the stats page
 app.get("/statistics", async(req, res) => {
+    playerDropDown(res);
+})
+
+//Gets all of the players to be loaded in the player dropdown
+playerDropDown = async function (res) {
     try {
         const text = "SELECT DISTINCT player_name FROM score_card";
         await pool.query(text, function(err, result) {
@@ -87,7 +97,7 @@ app.get("/statistics", async(req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-})
+}
 
 //Calculates basic statistics of a specified player and sends it to the front-end
 app.post("/statistics", async(req, res) => {
@@ -105,8 +115,9 @@ app.post("/statistics", async(req, res) => {
         const totalScores = await stats.calculateScoreTotals();
         const totalPutts = await stats.totalRoundPutts();
         const puttsPerHole = await stats.puttsPerHole();
+        const greensInReg = await stats.greensInRegulationPercent();
 
-        convertJson.push.apply(convertJson, [avgScore, bestScoreInfo, scoreTypes, handicap, holeAverage, totalScores, totalPutts, puttsPerHole]);
+        convertJson.push.apply(convertJson, [avgScore, bestScoreInfo, scoreTypes, handicap, holeAverage, totalScores, totalPutts, puttsPerHole, greensInReg]);
 
         let jsonString = JSON.stringify(convertJson);
         res.send(jsonString);
@@ -114,6 +125,34 @@ app.post("/statistics", async(req, res) => {
         console.error(err.message);
     }
 })
+
+//Gets all of the players to be loaded in the player dropdown of the score card page
+app.get("/game_scores", async(req, res) => {
+    playerDropDown(res);
+})
+
+app.post("/game_scores", async(req, res) => {
+    try {
+        const { selectedPlayer } = req.body;
+        const courses = "SELECT course_name, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total FROM course";
+        const scoreCards = "SELECT course_name, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total FROM score_card WHERE player_name=$1 ORDER BY game_date ASC";
+
+        const coursesResponse = await pool.query(courses);
+        const scoreCardResponse = await pool.query(scoreCards, [selectedPlayer]);
+        const align = new CourseAlign();
+        let convertJson = [];
+
+        let courseList = align.createCourseMap(coursesResponse);
+        let scoreList = align.createScoreCardMap(scoreCardResponse);
+
+        convertJson.push.apply(convertJson, [courseList, scoreList]);
+        let jsonString = JSON.stringify(convertJson);
+        res.send(jsonString);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 
 app.listen(5000, () => {
     console.log("server has started on port 5000")

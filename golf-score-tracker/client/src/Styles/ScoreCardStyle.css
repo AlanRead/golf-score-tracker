@@ -1,0 +1,29 @@
+.Card-score-box {
+    margin: 0 auto;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    background-color:rgba(199, 199, 199, 0.705);
+    width: 1000px;
+    padding:10px 10px 10px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Center-card-info {
+    margin: 0 auto;
+}
+
+.Card-scores {
+    margin: 0 auto;
+    margin-top:2%; 
+    background-color:rgb(0, 0, 0);
+    width: 900px;
+    padding:5px 10px 5px 10px;
+    border-radius:10px 10px 10px 10px;
+}
+
+.Table-cells {
+    table-layout: fixed;
+    width: 43px;
+    height: 43px;
+    border: 1px solid black;
+}

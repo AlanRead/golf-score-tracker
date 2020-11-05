@@ -112,9 +112,46 @@ class CourseAlign {
         }
     }
 
-    greensInRegulationPercent = function(response) {
+    greensInRegulationPercent = async function(playerName) {
         try {
-            
+            const courses = "SELECT course_name, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18 FROM course";
+            const scoreCards = "SELECT course_name, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18 FROM score_card WHERE player_name=$1 ORDER BY game_date ASC";
+            const putts = "SELECT course_name, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18 FROM putt_card WHERE player_name=$1 ORDER BY game_date ASC";
+
+            const coursesResponse = await pool.query(courses);
+            const scoreCardResponse = await pool.query(scoreCards, [playerName]);
+            const puttResponse = await pool.query(putts, [playerName]);
+
+            let courseMap = {};
+            let scoreCardMap = {};
+            let puttMap = {};
+            let totalGreens = 0;
+            let totalHoles = 0;
+
+            courseMap = this.createCourseMap(coursesResponse);
+            scoreCardMap = this.createScoreCardMap(scoreCardResponse);
+            puttMap = this.createScoreCardMap(puttResponse);
+
+            let courseCards = [];
+            let puttCards = [];
+            for (let [courseName, coursePars] of Object.entries(courseMap)) {
+                //Checks if the course key exists in the player's score card
+                if (!(courseName in scoreCardMap)) {
+                    continue;
+                }
+                courseCards = scoreCardMap[courseName];
+                puttCards = puttMap[courseName];
+                //Goes through all of score cards listed in the array
+                for(let i = 0; i < courseCards.length; i ++) {
+                    for (let j = 0; j < courseCards[i].length; j ++) {
+                        totalHoles ++;
+                        if (coursePars[j] - 2 == Math.abs(courseCards[i][j] - puttCards[i][j])) {
+                            totalGreens ++;
+                        }
+                    }
+                }
+            }
+            return ((totalGreens/totalHoles) * 100).toFixed(1);
         } catch (err) {
             console.error(err.message);
         }
@@ -122,7 +159,7 @@ class CourseAlign {
     
 
     /**
-     * Helper function to put all of the courses into a map. There's probably a better way to do this lol
+     * Helper function to put all of the courses into a map
      * Key: Course name
      * Value: Array of par scores
      */

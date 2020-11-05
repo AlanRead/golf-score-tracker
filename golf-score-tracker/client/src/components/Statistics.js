@@ -58,6 +58,16 @@ export default class Statistics extends Component {
                     }
                 ]
             },
+            pieGreenReg: {
+                labels: [],
+                datasets: [
+                    {
+                        label: '', 
+                        data: [],
+                        backgroundColor:[]
+                    }
+                ]
+            },
             pieHolePutts: {
                 labels: [],
                 datasets: [
@@ -83,9 +93,6 @@ export default class Statistics extends Component {
 
     handleSubmit = async(event) => {
         event.preventDefault();
-        this.setState ({
-            player: document.getElementById("player_list").value
-        })
         try {
             const response = await fetch ("http://localhost:5000/statistics", {
                 method: "POST",
@@ -108,6 +115,7 @@ export default class Statistics extends Component {
             this.createLineChart(data[5]);
             this.createTotalPuttsChart(data[6]);
             this.createHolePuttsChart(data[7]);
+            this.createGreensChart(data[8]);
         } catch (err) {
             console.error(err.messsage);
         }
@@ -139,7 +147,7 @@ export default class Statistics extends Component {
                     {
                         label: 'Scores', 
                         data: numScoreTypes,
-                        backgroundColor:['#32b1e4', '#a3cff6', '#a2a7aa', '#f6b840', '#ff9700', '#ee5c00', '#ec1d1d'],
+                        backgroundColor:['#32b1e4', '#a3cff6', '#a2a7aa', '#f6b840', '#ee5c00', '#AD6B00',  '#ec1d1d'],
                     }
                 ]
             }
@@ -177,7 +185,6 @@ export default class Statistics extends Component {
                     {
                         label: 'Round Totals', 
                         data: totals,
-                        //backgroundColor:['#00E4FF'],
                         borderColor:['#00AEFF'],
                                     
                     }
@@ -198,7 +205,23 @@ export default class Statistics extends Component {
                     {
                         label: 'Total Putts', 
                         data: totals,
-                        borderColor:['#00AEFF'],     
+                        borderColor:['#FFAA00'],     
+                    }
+                ]
+            }
+        })
+    }
+
+    createGreensChart = (greenPercent) => {
+        this.setState ({
+            pieGreenReg: {
+                title: "Greens in Regulation",
+                labels: ["Greens Percent", "Missed Greens Percent"],
+                datasets: [
+                    {
+                        label: 'Greens in Regulation Percent', 
+                        data: [greenPercent, 100-greenPercent],
+                        backgroundColor:['#54DE00', '#2D8700'],
                     }
                 ]
             }
@@ -221,7 +244,7 @@ export default class Statistics extends Component {
                     {
                         label: 'Putts per Hole', 
                         data: totalPutts,
-                        backgroundColor:['#32b1e4', '#a3cff6', '#a2a7aa', '#f6b840', '#ff9700', '#ee5c00', '#ec1d1d'],
+                        backgroundColor:['#32b1e4', '#a3cff6', '#a2a7aa', '#f6b840', '#ee5c00', '#AD6B00', '#ec1d1d'],
                     }
                 ]
             }
@@ -230,7 +253,7 @@ export default class Statistics extends Component {
 
     render() {
         return (
-            <div>
+            <div className="wrapper">
                 <form onSubmit={this.handleSubmit}>
                     <select id="player_list">
                         {this.populatePlayers()}
@@ -276,8 +299,8 @@ export default class Statistics extends Component {
                         }
                     />
                 </div>
-                <div className="Line-putt-chart">
-                    <Line data={this.state.lineTotalPutts} 
+                <div className="Pie-putt-chart">
+                    <Pie data={this.state.pieHolePutts} 
                         options={
                             {   
                                 animation: {
@@ -289,8 +312,21 @@ export default class Statistics extends Component {
                         }
                     />
                 </div>
-                <div className="Pie-putt-chart">
-                    <Pie data={this.state.pieHolePutts} 
+                <div className="Pie-greens-chart">
+                    <Pie data={this.state.pieGreenReg} 
+                        options={
+                            {   
+                                animation: {
+                                    animateScale: true,
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        }
+                    />
+                </div>
+                <div className="Line-putt-chart">
+                    <Line data={this.state.lineTotalPutts} 
                         options={
                             {   
                                 animation: {
