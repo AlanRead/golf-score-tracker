@@ -4,9 +4,12 @@ const cors = require("cors");
 
 // The database we will input and retrieve from
 const pool = require("./db");
-const Statistics = require ('./Statistics');
 const { text } = require("express");
+
 const CourseAlign = require("./CourseAlign");
+const Scores = require ('./Scores');
+const Handicap = require ('./Handicap');
+const Putts = require ('./Putts');
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +18,8 @@ app.use(express.json());
 app.post("/create_course", async(req, res) => {
     try {
         const { courseName, courseRating, slopeRating, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total } = req.body;
-        const text = "INSERT INTO course (course_name, course_rating, slope_rating, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *";
+        const text = "INSERT INTO course (course_name, course_rating, slope_rating, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, \
+            h17, h18, total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *";
         const values = [courseName, courseRating, slopeRating, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, total];
 
         await pool.query(text, values);
@@ -103,21 +107,24 @@ playerDropDown = async function (res) {
 app.post("/statistics", async(req, res) => {
     try {
         const { selectedPlayer } = req.body;
-        const stats = new Statistics(selectedPlayer);
+        const courseAlgin = new CourseAlign();
+        const scores = new Scores();
+        const handicap = new Handicap();
+        const putts = new Putts();
 
         let convertJson = [];
         
-        const avgScore = await stats.calculateOverallAverageScore();
-        const bestScoreInfo = await stats.calculateBestScore();
-        const scoreTypes = await stats.totalHoleScores();
-        const handicap = await stats.calculateHandicap();
-        const holeAverage = await stats.calculateParAverages();
-        const totalScores = await stats.calculateScoreTotals();
-        const totalPutts = await stats.totalRoundPutts();
-        const puttsPerHole = await stats.puttsPerHole();
-        const greensInReg = await stats.greensInRegulationPercent();
+        const avgScore = await scores.calculateOverallAverageScore(selectedPlayer);
+        const bestScoreInfo = await scores.calculateBestScore(selectedPlayer);
+        const scoreTypes = await courseAlgin.totalHoleScores(selectedPlayer);
+        const playerHandicap = await handicap.calculateHandicap(selectedPlayer);
+        const holeAverage = await courseAlgin.calculateParAverages(selectedPlayer);
+        const totalScores = await scores.calculateScoreTotals(selectedPlayer);
+        const totalPutts = await putts.totalRoundPutts(selectedPlayer);
+        const puttsPerHole = await putts.puttsPerHole(selectedPlayer);
+        const greensInReg = await courseAlgin.greensInRegulationPercent(selectedPlayer);
 
-        convertJson.push.apply(convertJson, [avgScore, bestScoreInfo, scoreTypes, handicap, holeAverage, totalScores, totalPutts, puttsPerHole, greensInReg]);
+        convertJson.push.apply(convertJson, [avgScore, bestScoreInfo, scoreTypes, playerHandicap, holeAverage, totalScores, totalPutts, puttsPerHole, greensInReg]);
 
         let jsonString = JSON.stringify(convertJson);
         res.send(jsonString);
@@ -131,6 +138,7 @@ app.get("/game_scores", async(req, res) => {
     playerDropDown(res);
 })
 
+//Gets all of the players score cards
 app.post("/game_scores", async(req, res) => {
     try {
         const { selectedPlayer } = req.body;
@@ -152,7 +160,6 @@ app.post("/game_scores", async(req, res) => {
         console.error(err.message);
     }
 })
-
 
 app.listen(5000, () => {
     console.log("server has started on port 5000")

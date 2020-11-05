@@ -38,8 +38,6 @@
     margin: 0 auto;
     margin-top: 1%;
     background-color:rgba(255, 255, 255, 0.863);
-    /* width: max-content; */
-    /* display:inline-block; */
     max-width: 1200px;
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
@@ -51,9 +49,6 @@
     width: 500px;
     margin-top: .5%;
     margin-left: 4%;
-    /* top: 40%;
-    left: 25%;
-    transform: translate(-75%, -60%); */
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
@@ -65,9 +60,6 @@
     width: 500px;
     margin-top: -21%;
     margin-left: 35%;
-    /* top: 40%;
-    left: 50%;
-    transform: translate(-50%, -60%); */
     background-color:rgba(255, 255, 255, 0.863);
     padding:10px 10px 10px 10px;
     border-radius:10px 10px 10px 10px;
